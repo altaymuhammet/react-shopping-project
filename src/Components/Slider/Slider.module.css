@@ -1,0 +1,51 @@
+.hero1 {
+    background-image: url("https://img.freepik.com/free-photo/woman-holding-various-shopping-bags-copy-space_23-2148674122.jpg?w=1800&t=st=1674588346~exp=1674588946~hmac=22c69387fbd1cb65e02f5f9178dbaa7ef6a74678a7d3cf6d6919414b8b553c5c");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center, center;
+    backface-visibility: visible;
+    width: 100%;
+    height: 550px;
+    position: relative;
+    border-radius: 20px;
+}
+
+.hero1 h1 {
+    width: 400px;
+    top: 200px;
+    left: 850px;
+}
+
+.hero2 {
+    background-image: url("https://img.freepik.com/free-photo/beautiful-young-blonde-woman-sunglasses-holding-shopping-bags-pink-wall_496169-1495.jpg?w=1800&t=st=1674587969~exp=1674588569~hmac=d410f15e1678a8e3c38d0736033501c5d40eb268ad4ae9a632c8a7d1bc266cad");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top, left;
+    backface-visibility: visible;
+    width: 100%;
+    height: 550px;
+    position: relative;
+    border-radius: 20px;
+}
+
+.hero3 {
+    background-image: url("https://img.freepik.com/premium-photo/young-crazy-bearded-man-with-santa-hat-christmas-concept_1194-33115.jpg?w=1800");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top, center;
+    backface-visibility: visible;
+    width: 100%;
+    height: 550px;
+    position: relative;
+    border-radius: 20px;
+}
+
+.hero3 h1 {
+    width: 400px;
+    top: 150px;
+    left: 850px;
+}
+
+.slick-arrow::before {
+    color: #3d3d3d !important;
+}
