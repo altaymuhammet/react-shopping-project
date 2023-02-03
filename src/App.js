@@ -9,6 +9,8 @@ import Footer from "./Components/Footer";
 import MixedProducts from "./Components/MixedProducts";
 import LoginPage from "./Components/LoginPage";
 import SignUpPage from "./Components/SignUpPage";
+import { ToastContainer } from "react-toastify";
+import { actions as userSliceActions } from "./Store/UserSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +46,19 @@ function App() {
     };
     getProducts();
   }, [dispatch]);
+
+  if( JSON.parse(localStorage.getItem("user")) ) {
+    const user = JSON.parse(localStorage.getItem("user"))
+    dispatch(
+      userSliceActions.getCurrentUser({
+        userId: user.uid,
+        photoURL: user.photoURL,
+        displayName: user.displayName,
+        email: user.email,
+        accessToken: user.accessToken,
+      })
+    );
+  }
 
   return (
     <div className="relative">
@@ -95,6 +110,7 @@ function App() {
         <Route path="/signuppage" element={<SignUpPage />} />
       </Routes>
       <Footer />
+      <ToastContainer />
     </div>
   );
 }

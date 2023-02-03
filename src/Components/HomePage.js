@@ -5,7 +5,7 @@ import HeroSlider from "./Slider/HeroSlider";
 
 const HomePage = ({ spinner, allPs, title }) => {
   return (
-    <div className="w-full">
+    <div className="w-full mt-[200px]">
       <HeroSlider />
       <div className="bg-favColor w-full pb-[100px] mt-[100px]">
       <MixedProducts products={allPs} title={title} />

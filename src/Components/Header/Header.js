@@ -9,7 +9,6 @@ import { HiShoppingCart } from "react-icons/hi";
 const Header = () => {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.userReducer);
-  console.log(userInfo);
 
   let activeStyle = {
     color: "#27D798",
@@ -21,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header className="px-[200px] w-full flex flex-col gap-8 border-b-2 border-black-custom pb-[30px]">
+    <header className="px-[200px] bg-white w-full fixed top-0 z-20 flex flex-col gap-8 border-b-2 border-black-custom pb-[30px]">
       <div className="flex flex-row justify-start items-center gap-8 pt-5">
         <svg
           onClick={logoClickHandler}
@@ -116,7 +115,7 @@ const Header = () => {
               className={classes.photoDiv}
               style={{ backgroundImage: `url(${userInfo.photoURL})` }}
             ></div>
-            <p className="font-semibold">{userInfo?.name}</p>
+            {/* <p className="font-semibold">{userInfo?.name}</p> */}
           </div>
         )}
         {userInfo?.isLoggedIn && userInfo?.photoURL && !userInfo?.name && (

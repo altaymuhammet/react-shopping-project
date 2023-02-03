@@ -4,6 +4,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useFormik } from "formik";
 import { auth, createUserWithEmailAndPassword } from "../db/db";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 
 const validate = (values) => {
@@ -50,12 +51,30 @@ const SignUpPage = () => {
         .then(() => {
           setSignupFail(false);
           navigate("/loginpage")
+          toast.success("Successfully registered!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"});
         })
         .catch((error) => {
           setSignupFail(true);
-          const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorMessage + " " + errorCode + typeof(errorCode));
+          if(errorMessage){
+            toast.error("Somthing went wrong! " + errorMessage, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"});
+          }
         });
     },
   });

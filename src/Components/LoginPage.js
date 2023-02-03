@@ -1,18 +1,35 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-import { auth, signInWithEmailAndPassword } from "../db/db";
+import {
+  auth,
+  signInWithEmailAndPassword,
+  provider,
+  signInWithPopup,
+} from "../db/db";
 import { useDispatch } from "react-redux";
 import { actions as userSliceActions } from "../Store/UserSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-
-  const [ authError, setAuthError ] = useState(null);
-
+  const [authError, setAuthError] = useState(null);
   const dispatch = useDispatch();
+
+  const showToast = (err) => {
+    toast.error("Somthing went wrong! " + err, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const validate = (values) => {
     const errors = {};
@@ -23,8 +40,8 @@ const LoginPage = () => {
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
       errors.email = "Invalid email address";
-    } else if (authError){
-      errors.email = authError
+    } else if (authError) {
+      errors.email = authError;
     }
 
     if (!values.password) {
@@ -56,15 +73,76 @@ const LoginPage = () => {
                 accessToken: user.accessToken,
               })
             );
-            navigate("/")
+            localStorage.setItem("user", JSON.stringify(user));
+            navigate("/");
+            toast.success("Successfully signed in!", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           }
         })
         .catch((error) => {
           const errorMessage = error.message;
-          setAuthError(errorMessage)
+          console.log(errorMessage);
+          setAuthError(errorMessage);
+          if (errorMessage) {
+            showToast(errorMessage);
+          }
         });
     },
   });
+
+  const googleOnClick = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log(result.user.photoURL);
+        if (user.accessToken) {
+          dispatch(
+            userSliceActions.getCurrentUser({
+              userId: user.uid,
+              photoURL: user.photoURL,
+              displayName: user.displayName,
+              email: user.email,
+              accessToken: user.accessToken,
+            })
+          );
+          localStorage.setItem("user", JSON.stringify(user));
+          navigate("/");
+          toast.success("Successfully signed in!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        if (errorMessage) {
+          toast.error("Somthing went wrong! " + errorMessage, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      });
+  };
 
   return (
     <div className="w-full px-[100px] py-[100px] flex justify-center items-center gap-5">
@@ -139,7 +217,10 @@ const LoginPage = () => {
           OR
           <hr className="w-[40%]" />
         </div>
-        <button className="w-full p-3 mb-3 border-2 border-black-custom rounded-[50px] flex justify-center items-center gap-5">
+        <button
+          onClick={googleOnClick}
+          className="w-full p-3 mb-3 border-2 border-black-custom rounded-[50px] flex justify-center items-center gap-5"
+        >
           <FcGoogle className="text-2xl" />
           <span className="">Sign in with Google</span>
         </button>
