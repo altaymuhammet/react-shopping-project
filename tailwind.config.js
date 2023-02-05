@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         "black-custom": "#3d3d3d",
         "brand-color": "#27D798",
-        "favColor" : "#CFF5E7",
+        "favColor" : "#f8edeb",
         "signColor" : "#7209b7"
       },
     },

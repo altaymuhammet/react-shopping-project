@@ -102,7 +102,6 @@ const LoginPage = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        console.log(result.user.photoURL);
         if (user.accessToken) {
           dispatch(
             userSliceActions.getCurrentUser({

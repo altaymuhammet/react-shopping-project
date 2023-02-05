@@ -1,20 +1,24 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+
 import Header from "./Components/Header/Header";
-import { actions as allProductsActions } from "./Store/productSlice";
-import { useSelector, useDispatch } from "react-redux";
 import HomePage from "./Components/HomePage";
 import Footer from "./Components/Footer";
 import MixedProducts from "./Components/MixedProducts";
 import LoginPage from "./Components/LoginPage";
 import SignUpPage from "./Components/SignUpPage";
 import { ToastContainer } from "react-toastify";
-import { actions as userSliceActions } from "./Store/UserSlice";
+import CardDetails from "./Components/CardDetails";
+
+import { actions as allProductsActions } from "./Store/productSlice";
+import { useSelector, useDispatch } from "react-redux";
+import UserMenu from "./Components/UserMenu";
 
 function App() {
   const dispatch = useDispatch();
   const allPs = useSelector((state) => state.productsReducer.allProducts);
+  const CurrentUser = useSelector((state) => state.UserMenuReducer.isMenuActive);
   const [spinner, setSpinner] = useState(false);
   const location = useLocation();
 
@@ -24,7 +28,10 @@ function App() {
     : "Products";
 
   const currentCategoryPs = allPs.filter((c) => {
-    if (c.category.replaceAll("'","").replaceAll(" ","") === location.pathname.slice(1).replaceAll(" ", "")) {
+    if (
+      c.category.replaceAll("'", "").replaceAll(" ", "") ===
+      location.pathname.slice(1).replaceAll(" ", "")
+    ) {
       return c;
     }
     return null;
@@ -47,22 +54,10 @@ function App() {
     getProducts();
   }, [dispatch]);
 
-  if( JSON.parse(localStorage.getItem("user")) ) {
-    const user = JSON.parse(localStorage.getItem("user"))
-    dispatch(
-      userSliceActions.getCurrentUser({
-        userId: user.uid,
-        photoURL: user.photoURL,
-        displayName: user.displayName,
-        email: user.email,
-        accessToken: user.accessToken,
-      })
-    );
-  }
-
   return (
     <div className="relative">
       <Header />
+      { CurrentUser && <UserMenu /> }
       <Routes>
         <Route
           path="/"
@@ -108,6 +103,7 @@ function App() {
         />
         <Route path="/loginpage" element={<LoginPage />} />
         <Route path="/signuppage" element={<SignUpPage />} />
+        <Route path="/productDetails/:id" element={<CardDetails />} />
       </Routes>
       <Footer />
       <ToastContainer />

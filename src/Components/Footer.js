@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-black text-white flex justify-center items-start gap-[15%] flex-wrap py-[150px]">
+    <footer className="w-full bottom-0 bg-black text-white flex justify-center items-start gap-[15%] flex-wrap py-[150px]">
       <div className="w-auto flex flex-col justify-start items-start gap-5">
         <h2 className="underline text-2xl">Categories</h2>
         <ul className="list-none flex flex-col gap-4">

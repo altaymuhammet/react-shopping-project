@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  signOut
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
@@ -14,7 +15,7 @@ const firebaseConfig = {
   apiKey: myApiKey,
   authDomain: "shopping-project-4b0ec.firebaseapp.com",
   projectId: "shopping-project-4b0ec",
-  storageBucket: "shopping-project-4b0ec.appspot.com",
+  storageBucket:  "shopping-project-4b0ec.appspot.com",
   messagingSenderId: "818510905435",
   appId: "1:818510905435:web:224e65b111cb5dc1b87f7e",
   measurementId: "G-44YGZGKEQE",
@@ -33,4 +34,5 @@ export {
   signInWithEmailAndPassword,
   provider,
   signInWithPopup,
+  signOut,
 };
