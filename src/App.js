@@ -10,18 +10,27 @@ import LoginPage from "./Components/LoginPage";
 import SignUpPage from "./Components/SignUpPage";
 import { ToastContainer } from "react-toastify";
 import CardDetails from "./Components/CardDetails";
+import UserMenu from "./Components/UserMenu";
+import Cart from "./Components/Cart";
 
 import { actions as allProductsActions } from "./Store/productSlice";
+import {
+  actions as userActions,
+  getAllUserInfoFromFirebase,
+} from "./Store/UserSlice";
 import { useSelector, useDispatch } from "react-redux";
-import UserMenu from "./Components/UserMenu";
+import { auth, onAuthStateChanged } from "./db/db";
 
 function App() {
   const dispatch = useDispatch();
   const allPs = useSelector((state) => state.productsReducer.allProducts);
-  const CurrentUser = useSelector((state) => state.UserMenuReducer.isMenuActive);
+
+  const CurrentUserMenu = useSelector(
+    (state) => state.UserMenuReducer.isMenuActive
+  );
+  const isUserLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
   const [spinner, setSpinner] = useState(false);
   const location = useLocation();
-
   const currentCategory = location.pathname.slice(1)
     ? location.pathname.slice(1).charAt(0).toUpperCase() +
       location.pathname.slice(2)
@@ -54,10 +63,25 @@ function App() {
     getProducts();
   }, [dispatch]);
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const currentUserAddedProducts = dispatch(
+          getAllUserInfoFromFirebase(user.uid)
+        );
+        currentUserAddedProducts.then((userInfo) => {
+          dispatch(userActions.getCurrentUser(userInfo));
+        });
+      } else {
+        dispatch(userActions.signoutCurrentUser());
+      }
+    });
+  }, [dispatch]);
+
   return (
     <div className="relative">
       <Header />
-      { CurrentUser && <UserMenu /> }
+      {CurrentUserMenu && <UserMenu />}
       <Routes>
         <Route
           path="/"
@@ -103,6 +127,7 @@ function App() {
         />
         <Route path="/loginpage" element={<LoginPage />} />
         <Route path="/signuppage" element={<SignUpPage />} />
+        {isUserLoggedIn && <Route path="/cart" element={<Cart />} />}
         <Route path="/productDetails/:id" element={<CardDetails />} />
       </Routes>
       <Footer />

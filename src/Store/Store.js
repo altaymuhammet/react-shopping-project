@@ -8,5 +8,9 @@ export const store = configureStore({
         productsReducer: productsReducer,
         userReducer: userReducer,
         UserMenuReducer: UserMenuReducer
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })  

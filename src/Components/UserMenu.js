@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOut, auth } from "../db/db";
 import { toast } from "react-toastify";
 
-import { AiFillCloseCircle, AiFillHeart } from "react-icons/ai";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { HiOutlineLogout, HiShoppingCart } from "react-icons/hi";
 
 const Menu = () => {
@@ -64,7 +64,7 @@ const Menu = () => {
           />
         </div>
         <ul className="w-full list-none py-5 flex flex-col justify-start items-start gap-5">
-          <li className="hover:underline w-full" onClick={closeClickHandler}>
+          {/* <li className="hover:underline w-full" onClick={closeClickHandler}>
             <Link
               to="/savedproducts"
               className="flex justify-start items-center px-5 gap-4"
@@ -72,7 +72,7 @@ const Menu = () => {
               <AiFillHeart className="text-xl" />
               <p className="font-bold">Saved Products</p>
             </Link>
-          </li>
+          </li> */}
           <li className="hover:underline w-full" onClick={closeClickHandler}>
             <Link
               to="/cart"

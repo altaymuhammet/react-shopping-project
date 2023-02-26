@@ -77,12 +77,12 @@ const Header = () => {
       </nav>
         {userInfo?.isLoggedIn && userInfo?.photoURL && (
           <div className="flex gap-10">
-            <Link to="/savedproducts">
+            {/* <Link to="/savedproducts">
               <div className="flex flex-col justify-center items-center hover:underline">
                 <AiFillHeart className="text-xl" />
                 <p className="font-semibold">Saved</p>
               </div>
-            </Link>
+            </Link> */}
             <Link to="/cart">
               <div className="flex flex-col justify-center items-center hover:underline">
                 <HiShoppingCart className="text-xl" />
@@ -99,12 +99,12 @@ const Header = () => {
         )}
         {userInfo?.isLoggedIn && !userInfo?.photoURL && (
           <div className="flex gap-10">
-            <Link to="/savedproducts">
+            {/* <Link to="/savedproducts">
               <div className="flex flex-col justify-center items-center hover:underline">
                 <AiFillHeart className="text-xl" />
                 <p className="font-semibold">Saved</p>
               </div>
-            </Link>
+            </Link> */}
             <Link to="/cart">
               <div className="flex flex-col justify-center items-center hover:underline">
                 <HiShoppingCart className="text-xl" />

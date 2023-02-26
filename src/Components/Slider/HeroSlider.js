@@ -12,7 +12,7 @@ const HeroSlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 1500,
+    autoplaySpeed: 2500,
     cssEase: "linear",
   };
   return (
@@ -22,21 +22,31 @@ const HeroSlider = () => {
         className="w-[95%] m-auto flex justify-center items-center "
       >
         <div className={classes.hero1}>
-          <h1 className="absolute text-5xl text-white font-bold leading-[60px]">
+          <div className="absolute top-[30%] right-[50px]">
+          <h1 className="text-5xl text-white font-bold leading-[60px]">
             Buy best quality products
           </h1>
+          </div>
         </div>
         <div className={classes.hero2}>
-          <div className="absolute top-5 right-[50px]">
-            <h1 className="text-5xl text-white font-bold mt-5 text-right">Fun</h1>
-            <h1 className="text-5xl text-white font-bold mt-5 text-right">Happiness</h1>
-            <h1 className="text-5xl text-white font-bold mt-5 text-right">Satisfaction</h1>
+          <div className="absolute top-[20%] right-[50px]">
+            <h1 className="text-5xl text-white font-bold mt-5 text-right">
+              Fun
+            </h1>
+            <h1 className="text-5xl text-white font-bold mt-5 text-right">
+              Happiness
+            </h1>
+            <h1 className="text-5xl text-white font-bold mt-5 text-right">
+              Satisfaction
+            </h1>
           </div>
         </div>
         <div className={classes.hero3}>
-        <h1 className="absolute text-5xl text-white font-bold leading-[60px]">
-            Follow up best opportunities
-          </h1>
+          <div className="absolute right-[50px] top-[30%]">
+            <h1 className="text-5xl text-white font-bold leading-[60px]">
+              Follow up best opportunities
+            </h1>
+          </div>
         </div>
       </Slider>
     </div>

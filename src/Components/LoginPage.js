@@ -6,10 +6,13 @@ import {
   auth,
   signInWithEmailAndPassword,
   provider,
-  signInWithPopup,
+  signInWithPopup
 } from "../db/db";
-import { useDispatch } from "react-redux";
-import { actions as userSliceActions } from "../Store/UserSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  actions as userSliceActions,
+  getAllUserInfoFromFirebase,
+} from "../Store/UserSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -17,6 +20,9 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [authError, setAuthError] = useState(null);
   const dispatch = useDispatch();
+
+  // const savedProducts = useSelector((state) => state.userReducer.savedProducts);
+  // const addedProducts = useSelector((state) => state.userReducer.addedProducts);
 
   const showToast = (err) => {
     toast.error("Somthing went wrong! " + err, {
@@ -64,20 +70,21 @@ const LoginPage = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           if (user.accessToken) {
-            dispatch(
-              userSliceActions.getCurrentUser({
-                userId: user.uid,
-                photoURL: user.photoURL,
-                displayName: user.displayName,
-                email: user.email,
-                accessToken: user.accessToken,
-              })
-            );
-            localStorage.setItem("user", JSON.stringify(user));
+            // const currentUserAddedProducts = dispatch(getAllUserInfoFromFirebase(user.uid));
+            // dispatch(
+            //   userSliceActions.getCurrentUser({
+            //     userId: user.uid,
+            //     photoURL: user.photoURL,
+            //     displayName: user.displayName,
+            //     email: user.email,
+            //     accessToken: user.accessToken,
+            //     // addedProducts: currentUserAddedProducts === undefined ? [] : currentUserAddedProducts, 
+            //   })
+            // );
             navigate("/");
             toast.success("Successfully signed in!", {
               position: "top-right",
-              autoClose: 3000,
+              autoClose: 1500,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
@@ -103,20 +110,14 @@ const LoginPage = () => {
       .then((result) => {
         const user = result.user;
         if (user.accessToken) {
+          // const currentUserAddedProducts = dispatch(getAllUserInfoFromFirebase(user.uid));
           dispatch(
-            userSliceActions.getCurrentUser({
-              userId: user.uid,
-              photoURL: user.photoURL,
-              displayName: user.displayName,
-              email: user.email,
-              accessToken: user.accessToken,
-            })
+            userSliceActions.getCurrentUser(user)
           );
-          localStorage.setItem("user", JSON.stringify(user));
           navigate("/");
           toast.success("Successfully signed in!", {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -144,9 +145,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="w-full px-[100px] py-[100px] flex justify-center items-center gap-5">
+    <div className="w-full mt-[80px] px-[100px] py-[100px] flex justify-center items-center gap-5">
       <img src={require("../assets/login.png")} alt="" className="w-[25%]" />
-      <div className="w-[40%] px-[30px] py-[30px] flex flex-col justify-center items-center gap-[30px] border border-black-custom shadow-lg rounded-3xl">
+      <div className="w-[40%] max-w-[400px] px-[30px] py-[30px] flex flex-col justify-center items-center gap-[30px] border border-black-custom shadow-lg rounded-3xl">
         <div className="w-full flex flex-col justify-start items-start gap-2">
           <h2 className="text-2xl font-bold">Welcome</h2>
           <h4 className="opacity-40">Please enter your details</h4>
